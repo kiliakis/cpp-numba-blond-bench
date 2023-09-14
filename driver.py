@@ -18,11 +18,11 @@ python driver.py -suite cpp -b histo \
 -p 1000000 1000000 1000000 1000000 2000000 2000000 2000000 2000000 4000000 4000000 4000000 4000000 8000000 8000000 8000000 8000000 16000000 16000000 16000000 16000000 \
 -s 128 128 128 128 256 256 256 256 512 512 512 512 1024 1024 1024 1024 2048 2048 2048 2048
 
-python driver.py -suite cpp -b histo \
--i 100 --nrf 1 -r 5 -output results-2023-09-14-cpp-2.csv \
+python driver.py -suite cpp -b histo histo_v2 histo_v3 histo_v4 histo_v5 \
+-i 100 --nrf 1 -r 5 -output results-2023-09-14-cpp-3.csv \
 -t 1 \
--p 1000000 16000000 \
--s 128 2048
+-p 1000000 8000000 \
+-s 128 1024
 
 python driver.py -suite cpp -b histo histo_v1 histo_v2 histo_v3 histo_v4 histo_v5 \
 -i 100 --nrf 1 -r 5 -output results-2023-09-13-cpp.csv \
@@ -77,6 +77,10 @@ cpp_funcs = {
     'kick': cpptrack.kick_cpp,
     'drift': cpptrack.drift_cpp,
     'histo': cpptrack.histogram_cpp,
+    'histo_v2': cpptrack.histogram_v2_cpp,
+    'histo_v3': cpptrack.histogram_v3_cpp,
+    'histo_v4': cpptrack.histogram_v4_cpp,
+    'histo_v5': cpptrack.histogram_v4_cpp,
     'lik': cpptrack.linear_interp_kick_cpp,
 }
 

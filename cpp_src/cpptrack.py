@@ -69,6 +69,43 @@ def histogram_cpp(dt, profile, cut_left, cut_right):
                      __getLen(profile),
                      __getLen(dt))
 
+def histogram_v2_cpp(dt, profile, cut_left, cut_right):
+    # profile does not need to be initialized at 0
+    cpplib.histogram_v2(__getPointer(dt),
+                     __getPointer(profile),
+                     __c_real(cut_left),
+                     __c_real(cut_right),
+                     __getLen(profile),
+                     __getLen(dt))
+
+def histogram_v3_cpp(dt, profile, cut_left, cut_right):
+    # profile does not need to be initialized at 0
+    cpplib.histogram_v3(__getPointer(dt),
+                     __getPointer(profile),
+                     __c_real(cut_left),
+                     __c_real(cut_right),
+                     __getLen(profile),
+                     __getLen(dt))
+
+def histogram_v4_cpp(dt, profile, cut_left, cut_right):
+    # profile does not need to be initialized at 0
+    cpplib.histogram_v4(__getPointer(dt),
+                     __getPointer(profile),
+                     __c_real(cut_left),
+                     __c_real(cut_right),
+                     __getLen(profile),
+                     __getLen(dt))
+
+def histogram_v5_cpp(dt, profile, cut_left, cut_right):
+    # profile does not need to be initialized at 0
+    cpplib.histogram_v5(__getPointer(dt),
+                     __getPointer(profile),
+                     __c_real(cut_left),
+                     __c_real(cut_right),
+                     __getLen(profile),
+                     __getLen(dt))
+
+
 def linear_interp_kick_cpp(dt, dE, voltage,
                        bin_centers, charge,
                        acceleration_kick):
