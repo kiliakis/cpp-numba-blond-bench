@@ -1,0 +1,19 @@
+####################
+#
+# Simple HTCondor submit description file
+# Everything with a leading # is a comment
+####################
+
+
+executable        = condor.sh
+# arguments     = "python --version"
+output        = benchmark.out
+error         = benchmark.err
+log           = benchmark.log
+request_cpus    = 8
++MaxRuntime     = 7200
+notification    = Always
+getenv          = True
+should_transfer_files = IF_NEEDED
+queue
+
