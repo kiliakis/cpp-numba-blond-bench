@@ -11,6 +11,9 @@ logs
 /__BENCHMARKS/fig/
 /__BENCHMARKS/animations/
 blond/_version.py
+*.csv
+*.png
+
 
 *.kdev4
 *.cubin
