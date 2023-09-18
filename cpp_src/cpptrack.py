@@ -118,3 +118,29 @@ def linear_interp_kick_cpp(dt, dE, voltage,
                              __getLen(bin_centers),
                              __getLen(dt),
                              __c_real(acceleration_kick))
+
+def linear_interp_kick_v2_cpp(dt, dE, voltage,
+                       bin_centers, charge,
+                       acceleration_kick):
+
+    cpplib.linear_interp_kick_v2(__getPointer(dt),
+                             __getPointer(dE),
+                             __getPointer(voltage),
+                             __getPointer(bin_centers),
+                             __c_real(charge),
+                             __getLen(bin_centers),
+                             __getLen(dt),
+                             __c_real(acceleration_kick))
+    
+def linear_interp_kick_v3_cpp(dt, dE, voltage,
+                       bin_centers, charge,
+                       acceleration_kick):
+
+    cpplib.linear_interp_kick_v3(__getPointer(dt),
+                             __getPointer(dE),
+                             __getPointer(voltage),
+                             __getPointer(bin_centers),
+                             __c_real(charge),
+                             __getLen(bin_centers),
+                             __getLen(dt),
+                             __c_real(acceleration_kick))

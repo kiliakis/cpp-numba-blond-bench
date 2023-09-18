@@ -30,14 +30,20 @@ python driver.py -suite cpp -b histo histo_v1 histo_v2 histo_v3 histo_v4 histo_v
 -p 1000000 \
 -s 128
 
-python driver.py -suite numba_par cpp -b histo histo_v1 histo_v2 histo_v3 histo_v4 histo_v5 \
--i 100 --nrf 1 -r 5 -output results-2023-09-13-16Mparts.csv \
--t 1 2 4 8 \
--p 16000000 \
--s 2048
+python driver.py -suite numba_par cpp -b histo histo_v5 lik lik_v2 lik_v3 kick drift \
+-i 100 --nrf 1 -r 5 -output results-2023-09-15-kick-drift-lik-histo.csv \
+-t 1 \
+-p 1000000 8000000 \
+-s 128 1024
 
 python driver.py -suite numpy -b histo histo_v1 histo_v2 histo_v3 histo_v4 histo_v5 \
 -i 100 --nrf 1 -r 5 -output results-2023-09-13-numpy.csv \
+-t 1 \
+-p 1000000 2000000 4000000 8000000 \
+-s 128 256 512 1024
+
+python driver.py -suite numpy cpp numba_par -b kick drift lik \
+-i 100 --nrf 1 -r 5 -output results-2023-09-13-kick-drift-lik.csv \
 -t 1 \
 -p 1000000 2000000 4000000 8000000 \
 -s 128 256 512 1024
@@ -82,9 +88,13 @@ cpp_funcs = {
     'histo_v4': cpptrack.histogram_v4_cpp,
     'histo_v5': cpptrack.histogram_v4_cpp,
     'lik': cpptrack.linear_interp_kick_cpp,
+    'lik_v2': cpptrack.linear_interp_kick_v2_cpp,
+    'lik_v3': cpptrack.linear_interp_kick_v3_cpp,
+
 }
 
 py_funcs = {
+    'kick_v0': pytrack.kick_v0_py,
     'kick': pytrack.kick_py,
     'drift': pytrack.drift_py,
     'histo': pytrack.histogram_py,
@@ -204,6 +214,7 @@ if __name__ == "__main__":
 
             func_args = {
                 'kick': (dt, dE, voltage, omega_rf, phi_rf, acc_kick),
+                'kick_v0': (dt, dE, voltage, omega_rf, phi_rf, acc_kick),
                 'drift': (dt, dE, T0, length_ratio, beta, energy, alpha_zero, alpha_one, alpha_two),
                 'histo': (dt, profile, cut_left, cut_right),
                 'histo_v1': (dt, profile, cut_left, cut_right),
@@ -211,8 +222,12 @@ if __name__ == "__main__":
                 'histo_v3': (dt, profile, cut_left, cut_right),
                 'histo_v4': (dt, profile, cut_left, cut_right),
                 'histo_v5': (dt, profile, cut_left, cut_right),
-                'lik': (dt, dE, induced_voltage, bin_centers, charge, acc_kick)
+                'lik': (dt, dE, induced_voltage, bin_centers, charge, acc_kick),
+                'lik_v2': (dt, dE, induced_voltage, bin_centers, charge, acc_kick),
+                'lik_v3': (dt, dE, induced_voltage, bin_centers, charge, acc_kick),
+
             }
+
 
             # call functions, in loops
             header = ['suite', 'benchmark', 'avg(ms)', 'std', 'min', 'max', 'particles', 'slices', 'n_rf', 'n_thr']

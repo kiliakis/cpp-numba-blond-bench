@@ -3,21 +3,32 @@ import math
 from numba import prange
 from numba import get_num_threads, get_thread_id
 
-def kick_py(dt, dE, voltage, omega, phi, acc_kick):
+def kick_v0_py(dt, dE, voltage, omega, phi, acc_kick):
     for j in range(len(voltage)):
         dE += voltage[j] * np.sin(omega[j] * dt + phi[j])
     dE += acc_kick
 
 
+def kick_py(dt, dE, voltage, omega, phi, acc_kick):
+    for j in range(len(voltage)):
+        if j == 0:
+            add_kick = acc_kick
+        else:
+            add_kick = 0.0
+        for i in prange(len(dt)):
+            dE[i] = dE[i] + voltage[j] * np.sin(omega[j] * dt[i] + phi[j]) + add_kick
+    
+
 def drift_py(dt, dE, T0, length_ratio, beta, energy, alpha_zero,
              alpha_one, alpha_two):
 
+    T = T0 * length_ratio
     inv_beta_sq = 1. / beta**2
     inv_ene_sq = 1. / energy**2
     for i in prange(len(dt)):
         beam_delta = np.sqrt(1. +
                              inv_beta_sq * (dE[i]*dE[i] * inv_ene_sq + 2 * dE[i]/energy)) - 1.
-        dt[i] += T0 * length_ratio * (
+        dt[i] += T * (
             (1 + alpha_zero * beam_delta +
              alpha_one * (beam_delta*beam_delta) +
              alpha_two * beam_delta*beam_delta*beam_delta) *
